@@ -2,12 +2,12 @@ apiVersion: v1
 kind: Template
 metadata:
   creationTimestamp: null
-  name: cxf-cdi-java-example
+  name: cxf-cdi-java-example-appdynamics
 
 parameters:
 - description: The template service name, required
   name: SERVICE_NAME
-  value: cxf-cdi-java-example
+  value: cxf-cdi-java-example-appdynamics
   required: true
 - description: The source repository
   name: SOURCE_REPOSITORY
@@ -19,7 +19,7 @@ parameters:
   required: false
 - description: AppDynamics Controller Host
   name: APPDYNAMICS_CONTROLLER_HOST_NAME
-  value: 
+  value: davinci2019012020230415.saas.appdynamics.com
   required: true
 - description: AppDynamics Controller Port
   name: APPDYNAMICS_CONTROLLER_PORT
@@ -31,9 +31,11 @@ parameters:
   required: true
 - description: AppDynamics Agent Account Name
   name: APPDYNAMICS_AGENT_ACCOUNT_NAME
+  value: davinci2019012020230415
   required: true
 - description: AppDynamics Agent Acount Key
   name: APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY
+  value: py46uquxorno
   required: true
 - description: Maven release version
   name: RELEASE_VERSION
