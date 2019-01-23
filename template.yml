@@ -9,12 +9,6 @@ parameters:
   name: SERVICE_NAME
   value: cxf-cdi-java-example-new
   required: true
-- description: A-MQ username, required
-  name: AMQ_USER
-  required: true
-- description: A-MQ password, required
-  name: AMQ_PASSWORD
-  required: true
 - description: The source repository
   name: SOURCE_REPOSITORY
   value: https://github.com/debianmaster/spring-sample-app.git
@@ -22,7 +16,7 @@ parameters:
 - description: Source branch
   name: SOURCE_REF
   value: 
-  required: true
+  required: false
 - description: AppDynamics Controller Host
   name: APPDYNAMICS_CONTROLLER_HOST_NAME
   value: davinci2019012020230415.saas.appdynamics.com
