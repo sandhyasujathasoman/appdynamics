@@ -2,24 +2,30 @@ apiVersion: v1
 kind: Template
 metadata:
   creationTimestamp: null
-  name: cxf-cdi-java-example-new
+  name: cxf-cdi-java-example
 
 parameters:
 - description: The template service name, required
   name: SERVICE_NAME
-  value: cxf-cdi-java-example-new
+  value: cxf-cdi-java-example
+  required: true
+- description: A-MQ username, required
+  name: AMQ_USER
+  required: true
+- description: A-MQ password, required
+  name: AMQ_PASSWORD
   required: true
 - description: The source repository
   name: SOURCE_REPOSITORY
-  value: https://github.com/debianmaster/spring-sample-app.git
+  value: https://github.com/benemon/camel-cxf-cdi-java-example
   required: true
 - description: Source branch
   name: SOURCE_REF
-  value: 
-  required: false
+  value: appdynamics
+  required: true
 - description: AppDynamics Controller Host
   name: APPDYNAMICS_CONTROLLER_HOST_NAME
-  value: davinci2019012020230415.saas.appdynamics.com
+  value: redhatinc298.saas.appdynamics.com
   required: true
 - description: AppDynamics Controller Port
   name: APPDYNAMICS_CONTROLLER_PORT
@@ -31,11 +37,9 @@ parameters:
   required: true
 - description: AppDynamics Agent Account Name
   name: APPDYNAMICS_AGENT_ACCOUNT_NAME
-  value: davinci2019012020230415
   required: true
 - description: AppDynamics Agent Acount Key
   name: APPDYNAMICS_AGENT_ACCOUNT_ACCESS_KEY
-  value: py46uquxorno
   required: true
 - description: Maven release version
   name: RELEASE_VERSION
@@ -60,6 +64,29 @@ objects:
       targetPort: 8080
     selector:
       app: ${SERVICE_NAME}
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: The broker's OpenWire port.
+    creationTimestamp: null
+    labels:
+      application: broker
+      template: amq62-basic
+      xpaas: 1.2.0
+    name: broker-amq-tcp
+  spec:
+    ports:
+    - port: 61616
+      protocol: TCP
+      targetPort: 61616
+    selector:
+      deploymentConfig: broker-amq
     sessionAffinity: None
     type: ClusterIP
   status:
@@ -112,6 +139,8 @@ objects:
       type: ImageChange
   status:
     lastVersion: 0
+
+- apiVersion: v1
   kind: ImageStream
   metadata:
     annotations:
@@ -130,6 +159,7 @@ objects:
   status:
     dockerImageRepository: ""
     
+- apiVersion: v1
   kind: DeploymentConfig
   metadata:
     creationTimestamp: null
